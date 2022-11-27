@@ -1,6 +1,3 @@
-/* eslint-disable linebreak-style */
-/* eslint-disable no-restricted-syntax */
-
 // const showError = document.querySelector("body");
 
 class Currency {
@@ -47,7 +44,7 @@ class Currency {
 const currencyBase = new Currency();
 
 (async () => {
-  const response = await fetch("http://api.nbp.pl/api/exchangerates/tables/A");
+  const response = await fetch('http://api.nbp.pl/api/exchangerates/tables/A');
   const data = await response.json();
   const date = data[0].effectiveDate;
   currencyBase.actualDate = date;
@@ -58,7 +55,3 @@ const currencyBase = new Currency();
 
   currencyBase.capitalizeName();
 })();
-
-// ograniczenie dla inputu - można wpisywać ledynie liczby
-// const getInputValue = document.querySelector('.exchange-input-field');
-// const inputValue = getInputValue.value;

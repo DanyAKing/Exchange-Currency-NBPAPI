@@ -206,18 +206,15 @@ const createExchangeByNameInterface = (id) => {
     const textContent = currencyBase.currencyName[id];
     removeChild(resultParagraf);
 
-    if (getButtonValue.value === '1') {
-      getButtonValue.setAttribute('value', '2');
-    } else if (getButtonValue.value === '2') {
-      getButtonValue.setAttribute('value', '1');
-    }
-    if (getButtonValue.value === '2') {
-      getInput.setAttribute('placeholder', textContent);
-      getButtonValue.innerText = 'Przelicz na PLN';
-    } else if (getButtonValue.value === '1') {
-      getInput.setAttribute('placeholder', 'PLN');
-      getButtonValue.innerText = `Przelicz na ${textContent}`;
-    }
+    getButtonValue.value === '1' ? getButtonValue.setAttribute('value', '2') : getButtonValue.setAttribute('value', '1');
+
+    // if (getButtonValue.value === '2') {
+    //   getInput.setAttribute('placeholder', textContent);
+    //   getButtonValue.innerText = 'Przelicz na PLN';
+    // } else if (getButtonValue.value === '1') {
+    //   getInput.setAttribute('placeholder', 'PLN');
+    //   getButtonValue.innerText = `Przelicz na ${textContent}`;
+    // }
   });
 };
 
