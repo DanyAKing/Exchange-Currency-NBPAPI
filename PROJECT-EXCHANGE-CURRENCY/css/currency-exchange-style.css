@@ -1,0 +1,41 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background-image: linear-gradient(to right, #DECBA4, #3E5151);
+    font-family: 'Courier New', Courier, monospace;
+}
+
+#container {
+    min-height:100%;
+	position:relative;
+}
+
+.header {
+    padding-bottom: 40px;
+    height: 40%;
+}
+
+.select-option {
+    margin-bottom: 18px;
+}
+
+.create-selected-option {
+    margin-bottom: 18px;
+}
+
+.select-frame {
+    padding: 5px;
+    margin-left: 10px;
+}
+
+.last-visit {
+    position:absolute;
+    bottom:0;
+    width:100%;
+    height:20px;
+    padding: 2px;		/* Wysokość stopki */
+    background: grey;
+    text-align: left;
+    font-size: 13px;
+}
