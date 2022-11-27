@@ -30,7 +30,7 @@ const createSelectByFullName = () => {
   currencyFullName.appendChild(newOption);
 
   let id = 0;
-  for (const name of actuallyCurrency.currencyName) {
+  for (const name of currencyBase.currencyName) {
     const newOption = document.createElement('option');
     newOption.innerText = name;
     newOption.value = id++;
@@ -66,7 +66,7 @@ const createSelectByCode = () => {
 
   const id = 0;
   // eslint-disable-next-line no-restricted-syntax
-  for (const code of actuallyCurrency.currencyCode) {
+  for (const code of currencyBase.currencyCode) {
     const newOption = document.createElement('option');
     newOption.innerText = code;
     newOption.value = id + 1;
@@ -143,8 +143,8 @@ const createExchangeByNameInterface = (id) => {
   // stworzenie paragrafu w form
   const createParagraph = document.createElement('p');
   createParagraph.classList.add('currency-name');
-  createParagraph.innerText = `${actuallyCurrency.getCurrencyName(id)} - kurs z dnia 
-  ${actuallyCurrency.actualDate} wynosi ${actuallyCurrency.getCurrencyMid(id)}`;
+  createParagraph.innerText = `${currencyBase.getCurrencyName(id)} - kurs z dnia 
+  ${currencyBase.actualDate} wynosi ${currencyBase.getCurrencyMid(id)}`;
   createChildrenForm.appendChild(createParagraph);
 
   // stworzenie inputu w form
@@ -156,16 +156,6 @@ const createExchangeByNameInterface = (id) => {
   // złapanie inputu, do którego jest wprowadzana wartość
   const exchangeValue = document.querySelector('.exchange-input-field');
 
-  // stworzenie button zamiany waluty
-  const createButton = document.createElement('button');
-  createButton.classList.add('exchange-btn');
-  createButton.setAttribute('type', 'submit');
-  createButton.setAttribute('value', '1');
-  createButton.innerText = `Przelicz na ${actuallyCurrency.currencyName[id]}`;
-  createChildrenForm.appendChild(createButton);
-  // złapanie button zamiany waluty
-  const exchangeAction = document.querySelector('.exchange-btn');
-
   // stworzenie button zamiany stron przeliczenia
   const createButtonPageChange = document.createElement('button');
   createButtonPageChange.className = 'page-change-btn';
@@ -174,6 +164,16 @@ const createExchangeByNameInterface = (id) => {
   createChildrenForm.appendChild(createButtonPageChange);
   // złapanie button zmiany stron przeliczenia
   const pageChange = document.querySelector('.page-change-btn');
+
+  // stworzenie button zamiany waluty
+  const createButton = document.createElement('button');
+  createButton.classList.add('exchange-btn');
+  createButton.setAttribute('type', 'submit');
+  createButton.setAttribute('value', '1');
+  createButton.innerText = `Przelicz na ${currencyBase.currencyName[id]}`;
+  createChildrenForm.appendChild(createButton);
+  // złapanie button zamiany waluty
+  const exchangeAction = document.querySelector('.exchange-btn');
 
   // stworzenie paragrafu z wynikiem
   const createResultParagraph = document.createElement('p');
@@ -194,8 +194,8 @@ const createExchangeByNameInterface = (id) => {
     // chwytanie id nawy waluty - indeks analogiczny do indeksu kursu
     const id = selectFullName();
 
-    const exchangeToPLN = `${actuallyCurrency.exchangePLNToCurrency(value, id)} ${actuallyCurrency.currencyCode[id]}`;
-    const exchangeFromPLN = `${actuallyCurrency.exchangeCurrencyToPLN(value, id)} PLN`;
+    const exchangeToPLN = `${currencyBase.exchangePLNToCurrency(value, id)} ${currencyBase.currencyCode[id]}`;
+    const exchangeFromPLN = `${currencyBase.exchangeCurrencyToPLN(value, id)} PLN`;
 
     exchangeSide === '1' ? showResult.innerText = exchangeToPLN : showResult.innerText = exchangeFromPLN;
   });
@@ -203,14 +203,20 @@ const createExchangeByNameInterface = (id) => {
   pageChange.addEventListener('click', () => {
     const getButtonValue = document.querySelector('.exchange-btn');
     const getInput = document.querySelector('.exchange-input-field');
-    const textContent = actuallyCurrency.currencyName[id];
+    const textContent = currencyBase.currencyName[id];
+    removeChild(resultParagraf);
 
     if (getButtonValue.value === '1') {
       getButtonValue.setAttribute('value', '2');
     } else if (getButtonValue.value === '2') {
-      // getInput.setAttribute('placeholder', textContent);
-      // getButtonValue.innerText = 'Przelicz na PLN';
       getButtonValue.setAttribute('value', '1');
+    }
+    if (getButtonValue.value === '2') {
+      getInput.setAttribute('placeholder', textContent);
+      getButtonValue.innerText = 'Przelicz na PLN';
+    } else if (getButtonValue.value === '1') {
+      getInput.setAttribute('placeholder', 'PLN');
+      getButtonValue.innerText = `Przelicz na ${textContent}`;
     }
   });
 };
@@ -228,7 +234,7 @@ const createExchangeByCodeInterface = (id) => {
   // stworzenie paragrafu w form
   const createParagraph = document.createElement('p');
   createParagraph.classList.add('currency-name');
-  createParagraph.innerText = `${actuallyCurrency.getCurrencyName(id)} - kurs z dnia ${actuallyCurrency.actualDate} wynosi ${actuallyCurrency.getCurrencyMid(id)}`;
+  createParagraph.innerText = `${currencyBase.getCurrencyName(id)} - kurs z dnia ${currencyBase.actualDate} wynosi ${currencyBase.getCurrencyMid(id)}`;
   createChildrenForm.appendChild(createParagraph);
 
   // stworzenie inputu w form
@@ -242,7 +248,7 @@ const createExchangeByCodeInterface = (id) => {
   const createButton = document.createElement('button');
   createButton.classList.add('exchange-btn');
   createButton.setAttribute('type', 'submit');
-  createButton.innerText = `przelicz na ${actuallyCurrency.currencyName[id]}`;
+  createButton.innerText = `przelicz na ${currencyBase.currencyName[id]}`;
   createChildrenForm.appendChild(createButton);
 
   // złapanie button
@@ -261,7 +267,7 @@ const createExchangeByCodeInterface = (id) => {
     // stworzenie paragrafu z wynikiem
     const createResultParagraph = document.createElement('p');
     createResultParagraph.classList.add('exchange-result');
-    createResultParagraph.innerText = actuallyCurrency.exchangePLNToCurrency(value, id);
+    createResultParagraph.innerText = currencyBase.exchangePLNToCurrency(value, id);
     exchangeResult.appendChild(createResultParagraph);
   });
 };

@@ -44,19 +44,19 @@ class Currency {
 //   showError.appendChild(errorMessage);
 // };
 
-const actuallyCurrency = new Currency();
+const currencyBase = new Currency();
 
 (async () => {
   const response = await fetch("http://api.nbp.pl/api/exchangerates/tables/A");
   const data = await response.json();
   const date = data[0].effectiveDate;
-  actuallyCurrency.actualDate = date;
+  currencyBase.actualDate = date;
   const currency = data[0].rates;
-  for (const element of currency) actuallyCurrency.currencyName.push(element.currency);
-  for (const element of currency) actuallyCurrency.currencyCode.push(element.code);
-  for (const element of currency) actuallyCurrency.currencyMid.push(element.mid);
+  for (const element of currency) currencyBase.currencyName.push(element.currency);
+  for (const element of currency) currencyBase.currencyCode.push(element.code);
+  for (const element of currency) currencyBase.currencyMid.push(element.mid);
 
-  actuallyCurrency.capitalizeName();
+  currencyBase.capitalizeName();
 })();
 
 // ograniczenie dla inputu - można wpisywać ledynie liczby
