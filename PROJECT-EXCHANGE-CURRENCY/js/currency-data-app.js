@@ -1,4 +1,4 @@
-// const showError = document.querySelector("body");
+const showError = document.querySelector("body");
 
 class Currency {
   constructor(date) {
@@ -34,24 +34,28 @@ class Currency {
   }
 }
 
-// const error = () => {
-//   removeChild(showError);
-//   const errorMessage = document.createElement("h1");
-//   errorMessage.innerText = "Somethinks went wrong. Please try again";
-//   showError.appendChild(errorMessage);
-// };
+const error = () => {
+  removeChild(showError);
+  const errorMessage = document.createElement("h1");
+  errorMessage.innerText = 'Somethinks went wrong. Please try again leater!';
+  showError.appendChild(errorMessage);
+};
 
 const currencyBase = new Currency();
 
 (async () => {
-  const response = await fetch('http://api.nbp.pl/api/exchangerates/tables/A');
-  const data = await response.json();
-  const date = data[0].effectiveDate;
-  currencyBase.actualDate = date;
-  const currency = data[0].rates;
-  for (const element of currency) currencyBase.currencyName.push(element.currency);
-  for (const element of currency) currencyBase.currencyCode.push(element.code);
-  for (const element of currency) currencyBase.currencyMid.push(element.mid);
+  try {
+    const response = await fetch('http://api.nbp.pl/api/exchangerates/tables/A');
+    const data = await response.json();
+    const date = data[0].effectiveDate;
+    currencyBase.actualDate = date;
+    const currency = data[0].rates;
+    for (const element of currency) currencyBase.currencyName.push(element.currency);
+    for (const element of currency) currencyBase.currencyCode.push(element.code);
+    for (const element of currency) currencyBase.currencyMid.push(element.mid);
+  } catch (err) {
+    error();
+  }
 
   currencyBase.capitalizeName();
 })();
