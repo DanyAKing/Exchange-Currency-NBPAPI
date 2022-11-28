@@ -166,7 +166,7 @@ const createExchangeByNameInterface = (id) => {
   createButtonPageChange.innerText = 'Zamień strony';
   createChildrenForm.appendChild(createButtonPageChange);
   // złapanie button zmiany stron przeliczenia
-  const pageChange = document.querySelector('.page-change-btn');
+  const changeSide = document.querySelector('.page-change-btn');
 
   // stworzenie button zamiany waluty
   const createButton = document.createElement('button');
@@ -203,7 +203,7 @@ const createExchangeByNameInterface = (id) => {
     exchangeSide === '1' ? showResult.innerText = exchangeToPLN : showResult.innerText = exchangeFromPLN;
   });
 
-  pageChange.addEventListener('click', () => {
+  changeSide.addEventListener('click', () => {
     const getButtonValue = document.querySelector('.exchange-btn');
     const getInput = document.querySelector('.exchange-input-field');
     const textContent = currencyBase.currencyName[id];
@@ -254,7 +254,7 @@ const createExchangeByCodeInterface = (id) => {
   createButtonPageChange.innerText = 'Zamień strony';
   createChildrenForm.appendChild(createButtonPageChange);
   // złapanie button zmiany stron przeliczenia
-  const pageChange = document.querySelector('.page-change-btn');
+  const changeSide = document.querySelector('.page-change-btn');
 
   // stworzenie button zamiany waluty
   const createButton = document.createElement('button');
@@ -291,7 +291,7 @@ const createExchangeByCodeInterface = (id) => {
     exchangeSide === '1' ? showResult.innerText = exchangeToPLN : showResult.innerText = exchangeFromPLN;
   });
 
-  pageChange.addEventListener('click', () => {
+  changeSide.addEventListener('click', () => {
     const getButtonValue = document.querySelector('.exchange-btn');
     const getInput = document.querySelector('.exchange-input-field');
     const textContent = currencyBase.currencyName[id];
