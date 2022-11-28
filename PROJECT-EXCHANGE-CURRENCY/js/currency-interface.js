@@ -30,6 +30,7 @@ const createSelectByFullName = () => {
   currencyFullName.appendChild(newOption);
 
   let id = 0;
+  // eslint-disable-next-line no-restricted-syntax
   for (const name of currencyBase.currencyName) {
     const newOption = document.createElement('option');
     newOption.innerText = name;
@@ -64,12 +65,12 @@ const createSelectByCode = () => {
   newOption.innerText = 'Wybierz...';
   currencyFullName.appendChild(newOption);
 
-  const id = 0;
+  let id = 0;
   // eslint-disable-next-line no-restricted-syntax
   for (const code of currencyBase.currencyCode) {
     const newOption = document.createElement('option');
     newOption.innerText = code;
-    newOption.value = id + 1;
+    newOption.value = id++;
     currencyFullName.appendChild(newOption);
   }
 };
@@ -96,17 +97,20 @@ const showSelectedOption = (selectElement) => {
     removeChild(createSelectedOption);
     removeChild(createExchange);
     removeChild(exchangeResult);
+    removeChild(resultParagraf);
     createSelectByFullName();
   } else if (selectElement === 'code') {
     removeChild(createSelectedOption);
     removeChild(createExchange);
     removeChild(exchangeResult);
+    removeChild(resultParagraf);
 
     createSelectByCode();
   } else if (selectElement === 'empty') {
     removeChild(createSelectedOption);
     removeChild(createExchange);
     removeChild(exchangeResult);
+    removeChild(resultParagraf);
   }
 };
 
@@ -136,7 +140,6 @@ const createExchangeByNameInterface = (id) => {
   const createForm = document.createElement('form');
   createForm.classList.add('exchange-form');
   createExchange.appendChild(createForm);
-
   // złapanie form
   const createChildrenForm = document.querySelector('.exchange-form');
 
@@ -208,13 +211,13 @@ const createExchangeByNameInterface = (id) => {
 
     getButtonValue.value === '1' ? getButtonValue.setAttribute('value', '2') : getButtonValue.setAttribute('value', '1');
 
-    // if (getButtonValue.value === '2') {
-    //   getInput.setAttribute('placeholder', textContent);
-    //   getButtonValue.innerText = 'Przelicz na PLN';
-    // } else if (getButtonValue.value === '1') {
-    //   getInput.setAttribute('placeholder', 'PLN');
-    //   getButtonValue.innerText = `Przelicz na ${textContent}`;
-    // }
+    if (getButtonValue.value === '2') {
+      getInput.setAttribute('placeholder', textContent);
+      getButtonValue.innerText = 'Przelicz na PLN';
+    } else if (getButtonValue.value === '1') {
+      getInput.setAttribute('placeholder', 'PLN');
+      getButtonValue.innerText = `Przelicz na ${textContent}`;
+    }
   });
 };
 
@@ -231,7 +234,8 @@ const createExchangeByCodeInterface = (id) => {
   // stworzenie paragrafu w form
   const createParagraph = document.createElement('p');
   createParagraph.classList.add('currency-name');
-  createParagraph.innerText = `${currencyBase.getCurrencyName(id)} - kurs z dnia ${currencyBase.actualDate} wynosi ${currencyBase.getCurrencyMid(id)}`;
+  createParagraph.innerText = `${currencyBase.getCurrencyName(id)} - kurs z dnia 
+  ${currencyBase.actualDate} wynosi ${currencyBase.getCurrencyMid(id)}`;
   createChildrenForm.appendChild(createParagraph);
 
   // stworzenie inputu w form
@@ -240,31 +244,67 @@ const createExchangeByCodeInterface = (id) => {
   createInput.setAttribute('placeholder', 'PLN');
   createInput.setAttribute('type', 'number');
   createChildrenForm.appendChild(createInput);
-
-  // stworzenie button
-  const createButton = document.createElement('button');
-  createButton.classList.add('exchange-btn');
-  createButton.setAttribute('type', 'submit');
-  createButton.innerText = `przelicz na ${currencyBase.currencyName[id]}`;
-  createChildrenForm.appendChild(createButton);
-
-  // złapanie button
-  const exchangeAction = document.querySelector('.exchange-btn');
   // złapanie inputu, do którego jest wprowadzana wartość
   const exchangeValue = document.querySelector('.exchange-input-field');
 
+  // stworzenie button zamiany stron przeliczenia
+  const createButtonPageChange = document.createElement('button');
+  createButtonPageChange.className = 'page-change-btn';
+  createButtonPageChange.setAttribute('type', 'button');
+  createButtonPageChange.innerText = 'Zamień strony';
+  createChildrenForm.appendChild(createButtonPageChange);
+  // złapanie button zmiany stron przeliczenia
+  const pageChange = document.querySelector('.page-change-btn');
+
+  // stworzenie button zamiany waluty
+  const createButton = document.createElement('button');
+  createButton.classList.add('exchange-btn');
+  createButton.setAttribute('type', 'submit');
+  createButton.setAttribute('value', '1');
+  createButton.innerText = `Przelicz na ${currencyBase.currencyName[id]}`;
+  createChildrenForm.appendChild(createButton);
+  // złapanie button
+  const exchangeAction = document.querySelector('.exchange-btn');
+
+  // stworzenie paragrafu z wynikiem
+  const createResultParagraph = document.createElement('p');
+  createResultParagraph.classList.add('result');
+  resultParagraf.appendChild(createResultParagraph);
+  // złapanie paragrafu z wynikiem
+  const showResult = document.querySelector('.result');
+
+  // zdarzenie przycisku przelicz
   exchangeAction.addEventListener('click', (event) => {
     // funkcja pozwalająca uniknąć przeładowania strony po wykonaniu submitu - (button type="submit")
     event.preventDefault();
     removeChild(exchangeResult);
-    // pprzypisanie wartości z inputu
+    // pobranie wartości value - przełącznik stron przeliczenia
+    const exchangeSide = exchangeAction.value;
+    // przypisanie wartości z inputu
     const { value } = exchangeValue;
+    // chwytanie id nawy waluty - indeks analogiczny do indeksu kursu
     const id = selectByCode();
 
-    // stworzenie paragrafu z wynikiem
-    const createResultParagraph = document.createElement('p');
-    createResultParagraph.classList.add('exchange-result');
-    createResultParagraph.innerText = currencyBase.exchangePLNToCurrency(value, id);
-    exchangeResult.appendChild(createResultParagraph);
+    const exchangeToPLN = `${currencyBase.exchangePLNToCurrency(value, id)} ${currencyBase.currencyCode[id]}`;
+    const exchangeFromPLN = `${currencyBase.exchangeCurrencyToPLN(value, id)} PLN`;
+
+    exchangeSide === '1' ? showResult.innerText = exchangeToPLN : showResult.innerText = exchangeFromPLN;
+  });
+
+  pageChange.addEventListener('click', () => {
+    const getButtonValue = document.querySelector('.exchange-btn');
+    const getInput = document.querySelector('.exchange-input-field');
+    const textContent = currencyBase.currencyName[id];
+    removeChild(resultParagraf);
+
+    getButtonValue.value === '1' ? getButtonValue.setAttribute('value', '2') : getButtonValue.setAttribute('value', '1');
+
+    if (getButtonValue.value === '2') {
+      getInput.setAttribute('placeholder', textContent);
+      getButtonValue.innerText = 'Przelicz na PLN';
+    } else if (getButtonValue.value === '1') {
+      getInput.setAttribute('placeholder', 'PLN');
+      getButtonValue.innerText = `Przelicz na ${textContent}`;
+    }
   });
 };
