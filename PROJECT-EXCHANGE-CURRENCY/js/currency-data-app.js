@@ -1,4 +1,4 @@
-const showError = document.querySelector("body");
+const body = document.querySelector("body");
 
 class Currency {
   constructor(date) {
@@ -34,18 +34,19 @@ class Currency {
   }
 }
 
-const error = () => {
-  removeChild(showError);
-  const errorMessage = document.createElement("h1");
-  errorMessage.innerText = 'Somethinks went wrong. Please try again leater!';
-  showError.appendChild(errorMessage);
+const errorMessage = () => {
+  removeChild(body);
+  const createHeader = document.createElement("h2");
+  createHeader.className = 'error-message';
+  createHeader.innerText = 'Somethinks went wrong. Please try again leater!';
+  body.appendChild(createHeader);
 };
 
 const currencyBase = new Currency();
 
 (async () => {
   try {
-    const response = await fetch('http://api.nbp.pl/api/exchangerates/tables/A');
+    const response = await fetch('http://aipi.nbp.pl/api/exchangerates/tables/A');
     const data = await response.json();
     const date = data[0].effectiveDate;
     currencyBase.actualDate = date;
@@ -54,7 +55,7 @@ const currencyBase = new Currency();
     for (const element of currency) currencyBase.currencyCode.push(element.code);
     for (const element of currency) currencyBase.currencyMid.push(element.mid);
   } catch (err) {
-    error();
+    errorMessage();
   }
 
   currencyBase.capitalizeName();
