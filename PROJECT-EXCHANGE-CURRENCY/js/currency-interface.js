@@ -1,7 +1,7 @@
 const createSelectedOption = document.querySelector('.create-selected-option');
 const createExchange = document.querySelector('.exchange');
-const exchangeResult = document.querySelector('.exchange-result');
-const resultParagraf = document.querySelector('.result');
+const createExchangeInteraction = document.querySelector('.exchange-result');
+const createExchangeResult = document.querySelector('.result');
 
 // funkcja dla stworzenia opcji wybroru po NAZWIE waluty
 const createSelectByFullName = () => {
@@ -83,7 +83,7 @@ const selectCurrencyOrCode = () => {
 };
 
 // usuwanie dzieci podczas wyboru
-const removeChild = (item) => {
+const removeChilden = (item) => {
   const removeElement = item;
   console.log(removeElement);
   while (removeElement.firstChild) {
@@ -94,23 +94,23 @@ const removeChild = (item) => {
 // tworzenie opcji dla wyboru nazwy waluty lub kodu
 const showSelectedOption = (selectElement) => {
   if (selectElement === 'currency') {
-    removeChild(createSelectedOption);
-    removeChild(createExchange);
-    removeChild(exchangeResult);
-    removeChild(resultParagraf);
+    removeChilden(createSelectedOption);
+    removeChilden(createExchange);
+    removeChilden(createExchangeInteraction);
+    removeChilden(createExchangeResult);
     createSelectByFullName();
   } else if (selectElement === 'code') {
-    removeChild(createSelectedOption);
-    removeChild(createExchange);
-    removeChild(exchangeResult);
-    removeChild(resultParagraf);
+    removeChilden(createSelectedOption);
+    removeChilden(createExchange);
+    removeChilden(createExchangeInteraction);
+    removeChilden(createExchangeResult);
 
     createSelectByCode();
   } else if (selectElement === 'empty') {
-    removeChild(createSelectedOption);
-    removeChild(createExchange);
-    removeChild(exchangeResult);
-    removeChild(resultParagraf);
+    removeChilden(createSelectedOption);
+    removeChilden(createExchange);
+    removeChilden(createExchangeInteraction);
+    removeChilden(createExchangeResult);
   }
 };
 
@@ -134,7 +134,7 @@ const selectByCode = () => {
 
 // stworzenie dzeci dla pola exchange opcji nazwy waluty
 const createExchangeByNameInterface = (id) => {
-  removeChild(createExchange);
+  removeChilden(createExchange);
 
   // stworzenie form
   const createForm = document.createElement('form');
@@ -181,7 +181,7 @@ const createExchangeByNameInterface = (id) => {
   // stworzenie paragrafu z wynikiem
   const createResultParagraph = document.createElement('p');
   createResultParagraph.classList.add('result');
-  resultParagraf.appendChild(createResultParagraph);
+  createExchangeResult.appendChild(createResultParagraph);
   // złapanie paragrafu z wynikiem
   const showResult = document.querySelector('.result');
 
@@ -189,7 +189,7 @@ const createExchangeByNameInterface = (id) => {
   exchangeAction.addEventListener('click', (event) => {
     // funkcja pozwalająca uniknąć przeładowania strony po wykonaniu submitu - (button type="submit")
     event.preventDefault();
-    removeChild(exchangeResult);
+    removeChilden(createExchangeInteraction);
     // pobranie wartości value - przełącznik stron przeliczenia
     const exchangeSide = exchangeAction.value;
     // przypisanie wartości z inputu
@@ -207,7 +207,7 @@ const createExchangeByNameInterface = (id) => {
     const getButtonValue = document.querySelector('.exchange-btn');
     const getInput = document.querySelector('.exchange-input-field');
     const textContent = currencyBase.currencyName[id];
-    removeChild(resultParagraf);
+    removeChilden(createExchangeResult);
 
     getButtonValue.value === '1' ? getButtonValue.setAttribute('value', '2') : getButtonValue.setAttribute('value', '1');
 
@@ -223,7 +223,7 @@ const createExchangeByNameInterface = (id) => {
 
 // stworzenie dzieci dla pola exchange opcji kodu waluty
 const createExchangeByCodeInterface = (id) => {
-  removeChild(createExchange);
+  removeChilden(createExchange);
   // stworzenie form
   const createForm = document.createElement('form');
   createForm.classList.add('exchange-form');
@@ -269,7 +269,7 @@ const createExchangeByCodeInterface = (id) => {
   // stworzenie paragrafu z wynikiem
   const createResultParagraph = document.createElement('p');
   createResultParagraph.classList.add('result');
-  resultParagraf.appendChild(createResultParagraph);
+  createExchangeResult.appendChild(createResultParagraph);
   // złapanie paragrafu z wynikiem
   const showResult = document.querySelector('.result');
 
@@ -277,7 +277,7 @@ const createExchangeByCodeInterface = (id) => {
   exchangeAction.addEventListener('click', (event) => {
     // funkcja pozwalająca uniknąć przeładowania strony po wykonaniu submitu - (button type="submit")
     event.preventDefault();
-    removeChild(exchangeResult);
+    removeChilden(createExchangeInteraction);
     // pobranie wartości value - przełącznik stron przeliczenia
     const exchangeSide = exchangeAction.value;
     // przypisanie wartości z inputu
@@ -295,7 +295,7 @@ const createExchangeByCodeInterface = (id) => {
     const getButtonValue = document.querySelector('.exchange-btn');
     const getInput = document.querySelector('.exchange-input-field');
     const textContent = currencyBase.currencyName[id];
-    removeChild(resultParagraf);
+    removeChilden(createExchangeResult);
 
     getButtonValue.value === '1' ? getButtonValue.setAttribute('value', '2') : getButtonValue.setAttribute('value', '1');
 

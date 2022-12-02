@@ -35,7 +35,7 @@ class Currency {
 }
 
 const errorMessage = () => {
-  removeChild(body);
+  removeChilden(body);
   const createHeader = document.createElement("h2");
   createHeader.className = 'error-message';
   createHeader.innerText = 'Somethinks went wrong. Please try again leater!';
