@@ -46,7 +46,7 @@ const currencyBase = new Currency();
 
 (async () => {
   try {
-    const response = await fetch('http://aipi.nbp.pl/api/exchangerates/tables/A');
+    const response = await fetch('http://api.nbp.pl/api/exchangerates/tables/A');
     const data = await response.json();
     const date = data[0].effectiveDate;
     currencyBase.actualDate = date;
