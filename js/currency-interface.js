@@ -281,7 +281,7 @@ const createExchangeByCodeInterface = (id) => {
     // pobranie wartości value - przełącznik stron przeliczenia
     const exchangeSide = exchangeAction.value;
     // przypisanie wartości z inputu
-    const { value } = exchangeValue;
+    const {value} = exchangeValue;
     // chwytanie id nawy waluty - indeks analogiczny do indeksu kursu
     const id = selectByCode();
 
