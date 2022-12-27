@@ -36,7 +36,7 @@ class Currency {
 
 const errorMessage = () => {
   removeChilden(body);
-  const createHeader = document.createElement("h2");
+  const createHeader = document.createElement('h2');
   createHeader.className = 'error-message';
   createHeader.innerText = 'Somethinks went wrong. Please try again leater!';
   body.appendChild(createHeader);
@@ -51,10 +51,13 @@ const currencyBase = new Currency();
     const date = data[0].effectiveDate;
     currencyBase.actualDate = date;
     const currency = data[0].rates;
-    for (const element of currency) currencyBase.currencyName.push(element.currency);
-    for (const element of currency) currencyBase.currencyCode.push(element.code);
-    for (const element of currency) currencyBase.currencyMid.push(element.mid);
-  } catch (err) {
+    // eslint-disable-next-line no-restricted-syntax
+    for (const element of currency) {
+      currencyBase.currencyName.push(element.currency);
+      currencyBase.currencyCode.push(element.code);
+      currencyBase.currencyMid.push(element.mid)
+    }
+  } catch (error) {
     errorMessage();
   }
 
