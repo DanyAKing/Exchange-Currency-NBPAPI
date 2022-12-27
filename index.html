@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator walutowy</title>
+    <link rel="stylesheet" href="./css/style.css">
+    
+</head>
+<body>
+  <div class="nav">
+    <ul>
+      <li><a href="#">Kursy walut</a></li>
+      <li><a href="#">Cena złota</a></li>
+      <li><a href="#">Archiwum kursów</a></li>
+    </ul>
+  </div>
+    <div class="container">
+      <section class="header">
+        <div class="header">
+            <h1>Kalkulator walutowy</h1>
+            <h2>Tutaj sprawdzisz aktualne kursy walut oraz dokonasz przeliczenia.</h2>
+            <h3>Aktualne kursy pobierane z NBP.</h3>
+        </div>
+      </section>
+      <section class="content">
+        <div class="select-option">
+          <label for="select-search" class="label">Jak chcesz wyszukiwać waluty?</label>
+            <select class="select-currency-or-code select-frame" id="select-search" onchange="selectCurrencyOrCode()">
+              <option value="empty">Wybierz dostępną opcję</option>
+              <option value="currency">Nazwa waluty</option>
+              <option value="code">Kod waluty</option>
+            </select>
+          <div class="create-selected-option"></div>
+          <div class="exchange-info"></div>
+          <div class="exchange"></div>
+          <div class="exchange-result"></div>
+          <div class="result"></div>
+        </div>
+      </section>
+    </div>
+    <div class="last-visit"></div>
+
+    <script src="./js/currency-data-app.js"></script>
+    <script src="./js/currency-interface.js"></script>
+    <script src="./js/last-visit-app.js"></script>
+</body>
+</html>
